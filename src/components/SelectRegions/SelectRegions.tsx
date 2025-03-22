@@ -1,3 +1,4 @@
+import React from 'react';
 import _ from './SelectRegions.module.css';
 
 interface RegionProps {
@@ -10,15 +11,17 @@ export default function SelectRegions({ regions, setSelectedRegion }: RegionProp
     setSelectedRegion(e.target.value);
   };
   return (
-    <select className={_.select} onChange={(e) => handleSelectChange(e)}>
-      <option value="all">All regions</option>
-      {regions.map((region) => {
-        return (
-          <option value={region} key={region}>
-            {region}
-          </option>
-        );
-      })}
-    </select>
+    <div className={_.select_wrapper}>
+      <select className={_.select} onChange={(e) => handleSelectChange(e)}>
+        <option value="all">All regions</option>
+        {regions.map((region) => {
+          return (
+            <option value={region} key={region}>
+              {region}
+            </option>
+          );
+        })}
+      </select>
+    </div>
   );
 }

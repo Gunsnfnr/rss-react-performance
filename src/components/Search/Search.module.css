@@ -20,16 +20,34 @@
   font-size: 13px;
   border-radius: 2px;
   border: 1px solid #767676;
+  background-color: #eee3d5;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
 }
 
+.search__button:hover {
+  border-color: #9b8d3e;
+  background-color: #f3ebe2;
+}
 @media (max-width: 650px) {
+  .search {
+    padding: 7px 0;
+  }
   .search__input {
-    max-width: 120px;
+    max-width: 100px;
+    height: 16px;
+  }
+  .search__button {
+    width: 100px;
+    height: 16px;
+    font-size: 0.7rem;
+    font-weight: 500;
   }
 }
 
 @media (max-width: 470px) {
   .search__input {
-    max-width: 107px;
+    max-width: 100px;
   }
 }

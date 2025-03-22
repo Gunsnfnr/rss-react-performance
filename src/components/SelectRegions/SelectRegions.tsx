@@ -12,6 +12,7 @@ export default function SelectRegions({ regions, setSelectedRegion }: RegionProp
   };
   return (
     <div className={_.select_wrapper}>
+      <span className={_.title}>Select</span>
       <select className={_.select} onChange={(e) => handleSelectChange(e)}>
         <option value="all">All regions</option>
         {regions.map((region) => {

@@ -18,6 +18,7 @@
 .countries__population,
 .countries__flag {
   cursor: default;
+  overflow: hidden;
 }
 
 .countries__name:not(.visited),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import _ from './SelectRegions.module.css';
 
 interface RegionProps {
@@ -6,7 +6,7 @@ interface RegionProps {
   setSelectedRegion: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function SelectRegions({ regions, setSelectedRegion }: RegionProps) {
+function SelectRegionsComponent({ regions, setSelectedRegion }: RegionProps) {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedRegion(e.target.value);
   };
@@ -26,3 +26,7 @@ export default function SelectRegions({ regions, setSelectedRegion }: RegionProp
     </div>
   );
 }
+
+const SelectRegions = memo(SelectRegionsComponent);
+
+export default SelectRegions;

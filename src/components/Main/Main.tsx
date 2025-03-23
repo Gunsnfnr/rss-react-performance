@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getCountries } from '../../api/api-request';
 import _ from './Main.module.css';
 import { CountryData, Sorting } from '../../types';
@@ -31,17 +31,30 @@ export default function Main() {
     updateCountries();
   }, []);
 
-  const filterCountries = (country: CountryData) => {
-    if (selectedRegion !== 'all' && country.region !== selectedRegion) return false;
-    if (searchTerm !== '' && !country.name.common.toLowerCase().includes(searchTerm)) return false;
-    return true;
-  };
+  const filterCountries = useCallback(
+    (country: CountryData) => {
+      if (selectedRegion !== 'all' && country.region !== selectedRegion) return false;
+      if (searchTerm !== '' && !country.name.common.toLowerCase().includes(searchTerm)) return false;
+      return true;
+    },
+    [searchTerm, selectedRegion]
+  );
+  const sortCountries = useCallback(
+    (a: { population: number }, b: { population: number }) => {
+      if (sorting === Sorting.Ascending) return a.population < b.population ? -1 : 1;
+      if (sorting === Sorting.Descending) return a.population > b.population ? -1 : 1;
+      return 0;
+    },
+    [sorting]
+  );
 
-  const sortCountries = (a: { population: number }, b: { population: number }) => {
-    if (sorting === Sorting.Ascending) return a.population < b.population ? -1 : 1;
-    if (sorting === Sorting.Descending) return a.population > b.population ? -1 : 1;
-    return 0;
-  };
+  const sortedCountries = useMemo(() => {
+    return [...countries].sort(sortCountries);
+  }, [countries, sortCountries]);
+
+  const sortedAndFilteredCountries = useMemo(() => {
+    return sortedCountries.filter(filterCountries);
+  }, [sortedCountries, filterCountries]);
 
   return (
     <div className={_.countries}>
@@ -49,19 +62,17 @@ export default function Main() {
       <SelectRegions regions={regions} setSelectedRegion={setSelectedRegion} />
       <SelectSorting setSorting={setSorting} />
       <Headings />
-      {countries
-        .sort(sortCountries)
-        .filter(filterCountries)
-        .map((country: CountryData) => {
-          return (
-            <Country
-              key={country.name.common}
-              country={country}
-              visitedCountries={visitedCountries}
-              setVisitedCountries={setVisitedCountries}
-            />
-          );
-        })}
+
+      {sortedAndFilteredCountries.map((country: CountryData) => {
+        return (
+          <Country
+            key={country.name.common}
+            country={country}
+            visitedCountries={visitedCountries}
+            setVisitedCountries={setVisitedCountries}
+          />
+        );
+      })}
     </div>
   );
 }

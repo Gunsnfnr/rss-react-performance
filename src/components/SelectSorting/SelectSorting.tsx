@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import _ from './SelectSorting.module.css';
 import { Sorting } from '../../types';
 
@@ -6,7 +6,7 @@ interface SortingProps {
   setSorting: React.Dispatch<React.SetStateAction<Sorting>>;
 }
 
-export default function SelectSorting({ setSorting }: SortingProps) {
+function SelectSortingComponent({ setSorting }: SortingProps) {
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSorting(e.target.value as Sorting);
   };
@@ -25,3 +25,7 @@ export default function SelectSorting({ setSorting }: SortingProps) {
     </div>
   );
 }
+
+const SelectSorting = memo(SelectSortingComponent);
+
+export default SelectSorting;

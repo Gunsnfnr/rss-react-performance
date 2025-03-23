@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import _ from './Headings.module.css';
 
-export default function Headings() {
+function HeadingsComponent() {
   return (
     <>
       <div className={`${_.cell} ${_.head}`}>Country Name</div>
@@ -10,3 +11,7 @@ export default function Headings() {
     </>
   );
 }
+
+const Headings = memo(HeadingsComponent);
+
+export default Headings;

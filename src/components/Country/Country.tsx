@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { memo, useLayoutEffect, useState } from 'react';
 import { CountryData } from '../../types';
 import _ from './Country.module.css';
 import { LOCALSTORAGE_KEYS } from '../../constants/localStorageKeys';
@@ -9,16 +9,19 @@ interface CountryProps {
   setVisitedCountries: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export default function Country({ country, visitedCountries, setVisitedCountries }: CountryProps) {
+function CountryComponent({ country, visitedCountries, setVisitedCountries }: CountryProps) {
   const [isVisited, setIsvisited] = useState<boolean>(false);
+  const storedData = localStorage.getItem(LOCALSTORAGE_KEYS.VisitedCountries);
 
   useLayoutEffect(() => {
-    const storedData = localStorage.getItem(LOCALSTORAGE_KEYS.VisitedCountries);
     if (storedData) {
-      setVisitedCountries(JSON.parse(storedData));
+      const parsedData = JSON.parse(storedData);
+      if (JSON.stringify(parsedData) !== JSON.stringify(visitedCountries)) {
+        setVisitedCountries(parsedData);
+      }
       if (visitedCountries.includes(country.name.common)) setIsvisited(true);
     }
-  }, []);
+  }, [country.name.common, visitedCountries, setVisitedCountries, storedData]);
 
   const handleClickCountry = () => {
     if (!visitedCountries.includes(country.name.common)) {
@@ -64,3 +67,7 @@ export default function Country({ country, visitedCountries, setVisitedCountries
     </React.Fragment>
   );
 }
+
+const Country = memo(CountryComponent);
+
+export default Country;

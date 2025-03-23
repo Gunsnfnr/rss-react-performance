@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { memo, useState } from 'react';
 import _ from './Search.module.css';
 
 interface SearchProps {
@@ -6,7 +6,7 @@ interface SearchProps {
   setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export default function Search({ searchTerm, setSearchTerm }: SearchProps) {
+function SearchComponent({ searchTerm, setSearchTerm }: SearchProps) {
   const [search, setSearch] = useState(searchTerm);
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -27,3 +27,7 @@ export default function Search({ searchTerm, setSearchTerm }: SearchProps) {
     </form>
   );
 }
+
+const Search = memo(SearchComponent);
+
+export default Search;

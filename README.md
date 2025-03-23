@@ -1,54 +1,21 @@
-# React + TypeScript + Vite
+# React Performance Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Below is a comparison for one particular action (changing the region filter from "All regions" to "Antarctic") recorded before and after application was optimised using memoisation (memo, useMemo, useCallback).
 
-Currently, two official plugins are available:
+## Before the optimisation.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![screenshot](public/Before-flame.PNG)
 
-## Expanding the ESLint configuration
+![screenshot](public/Before-ranked.PNG)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Render duration = 8,3 ms; Commit duration < 8,5 ms
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
-```
+## After the optimisation.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+![screenshot](public/After-flame.PNG)
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+![screenshot](public/After-ranked.PNG)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-});
-```
+Render duration = 1,3 ms; Commit duration = 1,6 ms
+
+As we can see, after optimisation with memoisation the number of re-renders has significantly decreased (Countries, Headings, Search and both Selects were not re-rendered) and the render time has become noticeably shorter for the commit (8,3ms before and 1,3ms after), as for the Main component, it stayed approximately the same - about 1 ms (0,8ms before and 1,3ms after).

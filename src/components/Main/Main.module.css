@@ -4,27 +4,7 @@
   grid-template-columns: repeat(4, 148px);
   width: 600px;
   gap: 1px;
-  font-size: 0.9rem;
-}
-
-.cell {
-  border: 1px solid #ccc;
-  margin: -1px;
-  height: 48px;
-  background-color: #e7e7e7;
-}
-
-.countries__name,
-.countries__region,
-.countries__population,
-.countries__flag {
-  display: grid;
-  place-items: center;
-}
-
-.countries__flag img {
-  max-width: 118px;
-  max-height: 40px;
+  font-size: 0.8rem;
 }
 
 @media (max-width: 650px) {
@@ -34,15 +14,6 @@
     gap: 1px;
     font-size: 13px;
   }
-
-  .cell {
-    height: 42px;
-  }
-
-  .countries__flag img {
-    max-width: 98px;
-    max-height: 35px;
-  }
 }
 
 @media (max-width: 470px) {
@@ -51,14 +22,5 @@
     width: 280px;
     gap: 1px;
     font-size: 11px;
-  }
-
-  .cell {
-    height: 33px;
-  }
-
-  .countries__flag img {
-    max-width: 48px;
-    max-height: 25px;
   }
 }

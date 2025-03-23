@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getCountries } from '../../api/api-request';
 import _ from './Main.module.css';
 import { CountryData, Sorting } from '../../types';
@@ -7,6 +7,8 @@ import SelectRegions from '../SelectRegions/SelectRegions';
 import Search from '../Search/Search';
 import Headings from '../Headings/Headings';
 import SelectSorting from '../SelectSorting/SelectSorting';
+import Country from '../Country/Country';
+import { LOCALSTORAGE_KEYS } from '../../constants/localStorageKeys';
 
 export default function Main() {
   const [countries, setCountries] = useState<CountryData[]>([]);
@@ -14,11 +16,15 @@ export default function Main() {
   const [sorting, setSorting] = useState<Sorting>(Sorting.None);
   const [selectedRegion, setSelectedRegion] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [visitedCountries, setVisitedCountries] = useState<string[]>(() => {
+    const storedData = localStorage.getItem(LOCALSTORAGE_KEYS.VisitedCountries);
+    if (storedData) return JSON.parse(storedData);
+    return [];
+  });
 
   useEffect(() => {
     const updateCountries = async () => {
       const response: CountryData[] = await getCountries();
-      console.log('response: ', response);
       setCountries(response);
       setRegions(getRegions(response));
     };
@@ -48,14 +54,12 @@ export default function Main() {
         .filter(filterCountries)
         .map((country: CountryData) => {
           return (
-            <React.Fragment key={country.name.common}>
-              <div className={`${_.cell} ${_.countries__name}`}>{country.name.common}</div>
-              <div className={`${_.cell} ${_.countries__flag}`}>
-                <img src={country.flags.png} />
-              </div>
-              <div className={`${_.cell} ${_.countries__region}`}>{country.region}</div>
-              <div className={`${_.cell} ${_.countries__population}`}>{country.population}</div>
-            </React.Fragment>
+            <Country
+              key={country.name.common}
+              country={country}
+              visitedCountries={visitedCountries}
+              setVisitedCountries={setVisitedCountries}
+            />
           );
         })}
     </div>

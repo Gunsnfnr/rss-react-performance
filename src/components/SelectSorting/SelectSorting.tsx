@@ -13,7 +13,7 @@ export default function SelectSorting({ setSorting }: SortingProps) {
   return (
     <div className={_.select_wrapper}>
       <span className={_.title}>Sorting</span>
-      <select className={_.select} onChange={(e) => handleSelectChange(e)}>
+      <select className={_.select} onChange={(e) => handleSelectChange(e)} defaultValue={Sorting.None}>
         {Object.values(Sorting).map((sortingType) => {
           return (
             <option value={sortingType} key={sortingType} disabled={sortingType === Sorting.None}>

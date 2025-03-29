@@ -56,6 +56,17 @@ export default function Main() {
     return sortedCountries.filter(filterCountries);
   }, [sortedCountries, filterCountries]);
 
+  const setCountryAsVisited = useCallback((country: CountryData) => {
+    setVisitedCountries((prevVisited) => {
+      if (!prevVisited.includes(country.name.common)) {
+        const updatedVisited = [...prevVisited, country.name.common];
+        localStorage.setItem(LOCALSTORAGE_KEYS.VisitedCountries, JSON.stringify(updatedVisited));
+        return updatedVisited;
+      }
+      return prevVisited;
+    });
+  }, []);
+
   return (
     <div className={_.countries}>
       <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -68,8 +79,8 @@ export default function Main() {
           <Country
             key={country.name.common}
             country={country}
-            visitedCountries={visitedCountries}
-            setVisitedCountries={setVisitedCountries}
+            setCountryAsVisited={() => setCountryAsVisited(country)}
+            isCountryVisited={visitedCountries.includes(country.name.common)}
           />
         );
       })}

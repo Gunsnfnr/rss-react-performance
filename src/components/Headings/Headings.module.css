@@ -1,0 +1,12 @@
+.cell {
+  border: 1px solid #a5a5a5;
+  margin: -1px;
+  height: 48px;
+  background-color: #dadada;
+}
+
+.head {
+  font-weight: bold;
+  display: grid;
+  place-items: center;
+}

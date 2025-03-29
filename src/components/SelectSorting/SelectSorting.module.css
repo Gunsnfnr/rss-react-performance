@@ -1,0 +1,36 @@
+.select_wrapper {
+  grid-column: 4 / 5;
+  text-align: left;
+  padding-bottom: 15px;
+  height: 21px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.select {
+  background: #f3f3f3;
+  border-radius: 2px;
+  height: 100%;
+  max-width: 90px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+}
+
+@media (max-width: 650px) {
+  .select_wrapper {
+    flex-direction: column;
+    justify-content: start;
+    padding: 7px 0;
+    gap: 4px;
+
+    .select,
+    .title {
+      font-size: 0.7rem;
+    }
+  }
+}

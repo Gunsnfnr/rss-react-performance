@@ -1,0 +1,26 @@
+.countries {
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 148px);
+  width: 600px;
+  gap: 1px;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 650px) {
+  .countries {
+    grid-template-columns: repeat(4, 98px);
+    width: 400px;
+    gap: 1px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 470px) {
+  .countries {
+    grid-template-columns: repeat(4, 68px);
+    width: 280px;
+    gap: 1px;
+    font-size: 11px;
+  }
+}

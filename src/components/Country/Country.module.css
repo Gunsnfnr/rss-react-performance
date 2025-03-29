@@ -1,0 +1,59 @@
+.cell {
+  border: 1px solid #a5a5a5;
+  margin: -1px;
+  height: 48px;
+  background-color: #e7e7e7;
+}
+
+.countries__name,
+.countries__region,
+.countries__population,
+.countries__flag {
+  display: grid;
+  place-items: center;
+}
+
+.countries__name,
+.countries__region,
+.countries__population,
+.countries__flag {
+  cursor: default;
+  overflow: hidden;
+}
+
+.countries__name:not(.visited),
+.countries__region:not(.visited),
+.countries__population:not(.visited),
+.countries__flag:not(.visited) {
+  cursor: cell;
+}
+
+.visited {
+  background-color: #c8d1c1;
+}
+.countries__flag img {
+  max-width: 118px;
+  max-height: 40px;
+}
+
+@media (max-width: 650px) {
+  .cell {
+    height: 42px;
+  }
+
+  .countries__flag img {
+    max-width: 98px;
+    max-height: 35px;
+  }
+}
+
+@media (max-width: 470px) {
+  .cell {
+    height: 33px;
+  }
+
+  .countries__flag img {
+    max-width: 48px;
+    max-height: 25px;
+  }
+}
